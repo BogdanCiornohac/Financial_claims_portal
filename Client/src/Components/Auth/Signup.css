@@ -9,6 +9,62 @@
   border-radius: 20px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  gap: 15px;
   align-items: center;
   box-shadow: 5px 5px 15px rgba(248, 230, 222, 0.5);
+}
+
+.form-container-back hr {
+  width: 65%;
+  border: 1px solid #acc125;
+}
+
+.form-container-back a {
+  color: #acc125;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: -10px;
+}
+
+.login-inputs input {
+  height: 40px;
+  width: 350px;
+  border-radius: 20px;
+  padding-left: 20px;
+  border: 3px inset #acc125;
+}
+
+.login-button {
+  width: 100px;
+  padding: 10px;
+  background-color: #acc125;
+  box-shadow: 2px 2px 0px 0px #808e23;
+}
+
+.login-button:active {
+  box-shadow: 1px 2px 0px 0px #808e23;
+  transform: translate(3px, 1px);
+}
+
+.password-container {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 20px;
+  color: #acc125;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 25px;
+  height: auto;
 }

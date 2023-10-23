@@ -13,10 +13,10 @@ const AuthPage = () => {
 
   return (
     <div className="auth-container">
-      <div className="form-container" onClick={rotateHandler}>
+      <div className="form-container">
         <div className={`form-container-inner ${rotate && "rotate"}`}>
-          <Login />
-          <Signup />
+          <Login rotateForm={rotateHandler} />
+          <Signup rotateForm={rotateHandler} />
         </div>
       </div>
       <div className="spacer layer1"></div>
