@@ -1,0 +1,24 @@
+.container {
+  width: 250px;
+  height: 40px;
+  border-radius: 20px;
+  position: relative;
+  border: green solid 2px;
+}
+.dot {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background-color: green;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: all 0.2s ease-in;
+}
+
+.active {
+  background-color: red;
+  right: 205px;
+}

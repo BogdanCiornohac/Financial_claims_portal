@@ -1,0 +1,14 @@
+.form-container-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  background-color: #041506;
+  border: 5px inset #acc125;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 15px rgba(248, 230, 222, 0.5);
+}

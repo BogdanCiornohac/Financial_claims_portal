@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import "./landing.css";
 
 const LandingPage = () => {
-  return <div>Landing page</div>;
+  const [active, setActive] = useState(false);
+
+  return (
+    <div className="container">
+      <div
+        className={`dot ${active && "active"}`}
+        onClick={() => setActive(!active)}
+      ></div>
+    </div>
+  );
 };
 
 export default LandingPage;
