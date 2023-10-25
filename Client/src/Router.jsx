@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import LandingPage from "./Pages/LandingPage";
 import AuthPage from "./Pages/AuthPage";
+import Navbar from "./Components/Navbar/Navbar";
 import { AuthContex } from "./Components/Context/auth-context";
 
 const Router = () => {
@@ -46,6 +47,7 @@ const Router = () => {
     <AuthContex.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
+      <Navbar />
       <BrowserRouter>{routes}</BrowserRouter>
     </AuthContex.Provider>
   );
