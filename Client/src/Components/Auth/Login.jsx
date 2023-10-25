@@ -1,26 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
+import Input from "../Input/Input";
+import { AuthContex } from "../Context/auth-context";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import "./Login.css";
 
-const Login = ({ rotateForm }) => {
+const Login = ({ rotateForm, user, setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const auth = useContext(AuthContex);
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
 
+  const setUserHandler = (id, value) => {
+    setUser({
+      ...user,
+      [id]: value,
+    });
+  };
+
+  const formHandler = (event) => {
+    event.preventDefault();
+    auth.login();
+  };
+
   return (
-    <form className="form-container-front">
+    <form className="form-container-front" onSubmit={formHandler}>
       <h1 className="title">LogIn</h1>
       <div className="login-inputs">
-        <input placeholder="Username" />
+        <Input
+          placeholder="Username"
+          type="text"
+          value={user.username}
+          inputHandler={setUserHandler}
+        />
         <div className="password-container">
-          <input
+          <Input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            required
+            value={user.password}
+            inputHandler={setUserHandler}
           />
           {showPassword ? (
             <RiEyeLine onClick={showPasswordHandler} className="input-icon" />
