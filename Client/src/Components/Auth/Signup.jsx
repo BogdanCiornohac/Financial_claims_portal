@@ -17,10 +17,34 @@ const Signup = ({ rotateForm, user, setUser }) => {
     });
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    auth.login();
+    
+    const requestData = {
+      email: user.email,
+      username: user.username,
+      password: user.password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5173/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (response.ok) {
+        //Trebuie redirectat prin router(cred ca face deja asta dar nu stiu cum sa opresc in cazul in cazul else)
+      } else {
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
   };
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };

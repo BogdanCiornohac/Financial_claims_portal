@@ -21,9 +21,31 @@ const Login = ({ rotateForm, user, setUser }) => {
     });
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    auth.login();
+    
+    const requestData = {
+      username: user.username,
+      password: user.password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5173/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (response.ok) {
+        auth.login();
+      } else {
+        console.log("Authentication failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
