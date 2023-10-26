@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 
 import Input from "../Input/Input";
-import { AuthContex } from "../Context/auth-context";
+import { AuthContext } from "../Context/auth-context";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import "./Signup.css";
 
 const Signup = ({ rotateForm, user, setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const auth = useContext(AuthContex);
+  const auth = useContext(AuthContext);
 
   const setUserHandler = (id, value) => {
     setUser({

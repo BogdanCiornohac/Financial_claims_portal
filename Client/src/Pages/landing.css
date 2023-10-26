@@ -1,13 +1,13 @@
 .landingpage-container {
-  width: 250px;
+  width: 500px;
   height: 1000px;
   border-radius: 20px;
   position: absolute;
   margin: 10px;
   border: green solid 2px;
-  top: 50%;
+  top: 200px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 }
 .dot {
   height: 35px;

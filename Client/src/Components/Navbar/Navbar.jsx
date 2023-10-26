@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 
 import UserProfile from "./UserProfile";
-import { AuthContex } from "../Context/auth-context";
+import { AuthContext } from "../Context/auth-context";
 import "./NavBar.css";
 
 const Navbar = () => {
-  const auth = useContext(AuthContex);
+  const auth = useContext(AuthContext);
   const initials = "B";
 
   return (

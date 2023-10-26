@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import AuthPage from "./Pages/AuthPage";
 import Navbar from "./Components/Navbar/Navbar";
-import { AuthContex } from "./Components/Context/auth-context";
+import { AuthContext } from "./Components/Context/auth-context";
 
 const Router = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,12 +44,12 @@ const Router = () => {
   }
 
   return (
-    <AuthContex.Provider
+    <AuthContext.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
       <Navbar />
       <BrowserRouter>{routes}</BrowserRouter>
-    </AuthContex.Provider>
+    </AuthContext.Provider>
   );
 };
 
