@@ -15,26 +15,17 @@ const storage = getStorage();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/", upload.single("file"), async (req, res) => {
-    try {
+router.post("/", upload.single("file"), catchAsync(async (req, res) => {
 
-        const storageRef = ref(storage, `files/${req.file.originalname}`);
-
-
-        const metadata = {
-            contentType: req.file.mimetype,
-        };
-
-
-        const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
-
-        const downloadURL = await getDownloadURL(snapshot.ref);
-
-        console.log('File successfully uploaded.', downloadURL);
-        res.send('Uploaded');
-    } catch (error) {
-        return res.status(400).send(error.message)
+    const storageRef = ref(storage, `tickets/${req.file.originalname}`);
+    const metadata = {
+        contentType: req.file.mimetype
     }
-});
+
+    const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    console.log('File successfully uploaded.', downloadURL);
+    res.send('Uploaded');
+}));
 
 export default router;
