@@ -17,10 +17,36 @@ const Signup = ({ rotateForm, user, setUser }) => {
     });
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    auth.login();
+
+    const requestData = {
+      email: user.email,
+      username: user.username,
+      password: user.password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+      const data = await response.json();
+
+      if (data.registered) {
+        auth.login(data.id);
+      } else {
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
   };
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };

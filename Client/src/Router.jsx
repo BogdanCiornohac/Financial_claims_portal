@@ -8,13 +8,17 @@ import { AuthContex } from "./Components/Context/auth-context";
 
 const Router = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const login = useCallback(() => {
+  const [userId, setUserId] = useState('');
+  console.log(userId);
+  const login = useCallback((id) => {
     setIsLoggedIn(true);
+    setUserId(id);
+
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId('');
   }, []);
 
   let routes;
@@ -45,7 +49,7 @@ const Router = () => {
 
   return (
     <AuthContex.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId }}
     >
       <Navbar />
       <BrowserRouter>{routes}</BrowserRouter>
