@@ -1,9 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "asii-tickets.firebaseapp.com",
@@ -14,8 +11,4 @@ const firebaseConfig = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-export default app
+export default firebaseConfig
