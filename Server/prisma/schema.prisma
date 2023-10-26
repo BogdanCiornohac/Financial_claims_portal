@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(uuid())
+  username String   @unique
+  password String
+  email    String   @unique
+  isAdmin  Boolean  @default(false)
+  tickets  Ticket[]
+}
+
+model Ticket {
+  id       String  @id @default(uuid())
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId String
+  title    String
+  text     String
+  file     File?
+  aproved  Boolean @default(false)
+}
+
+model File {
+  file_name String
+  url       String
+
+  ticketId String @unique
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+}

@@ -19,7 +19,7 @@ const Signup = ({ rotateForm, user, setUser }) => {
 
   const formHandler = async (event) => {
     event.preventDefault();
-    
+
     const requestData = {
       email: user.email,
       username: user.username,
@@ -27,17 +27,19 @@ const Signup = ({ rotateForm, user, setUser }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:5173/api/signup", {
+      const response = await fetch("http://localhost:3000/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(requestData),
       });
+      const data = await response.json();
 
-      if (response.ok) {
-        //Trebuie redirectat prin router(cred ca face deja asta dar nu stiu cum sa opresc in cazul in cazul else)
+      if (data.registered) {
+        auth.login(data.id);
       } else {
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
