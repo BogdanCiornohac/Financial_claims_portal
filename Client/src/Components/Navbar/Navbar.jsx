@@ -11,7 +11,8 @@ const Navbar = () => {
   return (
     <nav className="nav-container">
       <h1>TicketsAsii</h1>
-      {auth.isLoggedIn && <UserProfile userInitial={initials} />}
+      {auth.user.isLoggedIn && <button onClick={auth.logout}>Logout</button>}
+      {auth.user.isLoggedIn && <UserProfile userInitial={initials} />}
     </nav>
   );
 };

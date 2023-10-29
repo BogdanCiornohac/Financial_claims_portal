@@ -5,6 +5,8 @@ import multer from 'multer'
 import config from "../firebase.mjs";
 import { initializeApp } from "firebase/app"
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import isLoggedIn from "../middleware/isLoggedIn.mjs";
+import isAdmin from "../middleware/isAdmin.mjs";
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -13,8 +15,8 @@ const storage = getStorage();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.route("/")
-    .post(upload.single("file"), catchAsync(async (req, res) => {
-        const { userId, title, text } = req.body;
+    .post(upload.single("file"), catchAsync(isLoggedIn), catchAsync(async (req, res) => {
+        const { title, text } = req.body;
         const storageRef = ref(storage, `tickets/${req.file.originalname}`);
         const metadata = {
             contentType: req.file.mimetype
@@ -23,12 +25,8 @@ router.route("/")
         const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
         const downloadURL = await getDownloadURL(snapshot.ref);
 
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            }
-        })
-        console.log(user);
+        const user = res.locals.user;
+
         const ticket = await prisma.ticket.create({
             data:
             {
@@ -51,23 +49,46 @@ router.route("/")
         console.log('File successfully uploaded.', downloadURL);
         res.status(200).json({ posted: true });
     }))
-    .get(catchAsync(async (req, res) => {
+    .get(catchAsync(isLoggedIn), catchAsync(async (req, res) => {
         const { userId } = req.body;
-        console.log(userId);
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            },
-            include: {
-                tickets: {
-                    include: {
-                        file: true
+        const user = res.locals.user;
+        if (!user.isAdmin) {
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: userId
+                },
+                include: {
+                    tickets: {
+                        include: {
+                            file: true
+                        }
                     }
                 }
-            }
-        })
-        res.status(200);
-        res.json(user.tickets);
+            })
+            res.status(200);
+            res.json({ tickets: user.tickets });
+        } else {
+            const tickets = await prisma.ticket.findMany({
+                include: {
+                    author: true,
+                    file: true
+                }
+            });
+            res.status(200).json({ tickets })
+        }
     }))
+router.patch('/:ticketId', catchAsync(isLoggedIn), isAdmin, catchAsync(async (req, res) => {
+    const { ticketId } = req.params;
+    const ticket = await prisma.ticket.update({
+        where: {
+            id: ticketId
+        },
+        data: {
+            aproved: true,
+        }
+    })
+    console.log(ticket);
+    res.status(200).json({ updated: true });
+}))
 
 export default router;

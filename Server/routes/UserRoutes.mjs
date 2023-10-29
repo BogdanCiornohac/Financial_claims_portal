@@ -18,12 +18,15 @@ router.post("/login", catchAsync(async (req, res) => {
     })
 
     console.log(user);
-    const compare = await bcrypt.compare(password, user.password);
+    let compare = false;
+    if (user) {
+        compare = await bcrypt.compare(password, user.password);
+    }
     if (user && compare) {
-        console.log('Same')
-        res.status(200).json({ authenticated: true, id: user.id, message: "Authentication successful" });
+        // console.log('Same')
+        res.status(200).json({ authenticated: true, id: user.id, isAdmin: user.isAdmin, message: "Authentication successful" });
     } else {
-        res.status(401).json({ authenticated: false, message: "Authentication failed" });
+        res.status(401).json({ authenticated: false, message: "Invalid username or password" });
     }
 }));
 
@@ -38,9 +41,9 @@ router.post("/signup", catchAsync(async (req, res) => {
             password: hash
         }
     })
-    console.log(user);
+    // console.log(user);
 
-    res.status(201).json({ registered: true, id: user.id, message: "Registration successful" });
+    res.status(201).json({ registered: true, id: user.id, isAdmin: user.isAdmin, message: "Registration successful" });
 }));
 
 export default router;

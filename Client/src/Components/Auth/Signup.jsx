@@ -8,6 +8,7 @@ import "./Signup.css";
 
 const Signup = ({ rotateForm, user, setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
   const auth = useContext(AuthContex);
 
   const setUserHandler = (id, value) => {
@@ -37,9 +38,10 @@ const Signup = ({ rotateForm, user, setUser }) => {
       const data = await response.json();
 
       if (data.registered) {
-        auth.login(data.id);
+        auth.login(data.id, data.isAdmin);
+        setError(null);
       } else {
-        console.log(data.message);
+        setError(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -50,8 +52,10 @@ const Signup = ({ rotateForm, user, setUser }) => {
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <form className="form-container-back" onSubmit={formHandler}>
+      {error && <div>{error}</div>}
       <h1 className="title">SignUp</h1>
       <div className="login-inputs">
         <Input
@@ -62,7 +66,7 @@ const Signup = ({ rotateForm, user, setUser }) => {
         />
         <Input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           value={user.username}
           inputHandler={setUserHandler}
         />
