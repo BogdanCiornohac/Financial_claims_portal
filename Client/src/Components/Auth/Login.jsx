@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import Input from "../Input/Input";
-import { AuthContex } from "../Context/auth-context";
+import { AuthContext } from "../Context/auth-context";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { RiEyeLine } from "react-icons/ri";
 import "./Login.css";
@@ -9,7 +9,7 @@ import "./Login.css";
 const Login = ({ rotateForm, user, setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const auth = useContext(AuthContex);
+  const auth = useContext(AuthContext);
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -40,7 +40,7 @@ const Login = ({ rotateForm, user, setUser }) => {
       });
       const data = await response.json();
       if (data.authenticated) {
-        auth.login(data.id, data.isAdmin);
+        auth.login(data.id, data.isAdmin, data.username);
         setError(null);
       } else {
         setError(data.message);
