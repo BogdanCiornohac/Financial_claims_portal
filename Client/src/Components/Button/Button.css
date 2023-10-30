@@ -1,0 +1,16 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.button.edit {
+  background-color: yellow;
+  border: 2px inset rgb(143, 143, 35);
+}
+
+.button.delete {
+  background-color: red;
+  border: 2px inset rgb(142, 24, 24);
+}

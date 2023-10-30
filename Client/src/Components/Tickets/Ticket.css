@@ -1,0 +1,70 @@
+.card-container {
+  width: 70%;
+  min-height: 150px;
+  background-color: #041506;
+  border-radius: 20px;
+  position: relative;
+  border: 2px inset #acc125;
+  padding: 20px;
+  overflow: hidden;
+}
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-container p {
+  margin-top: 0;
+}
+
+.card-container .status {
+  border: 5px;
+  padding: 5px;
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: black;
+  border-radius: 10px;
+  font-weight: 700;
+  position: absolute;
+  cursor: default;
+  right: 10px;
+}
+
+.status.inprogress {
+  background-color: yellow;
+}
+
+.status.approved {
+  background-color: green;
+}
+
+.status.rejected {
+  background-color: red;
+}
+
+.ticket-title {
+  font-size: 30px;
+}
+
+.pdf-link {
+  color: #acc125;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  width: 100px;
+  transition: 0.2s all ease-in;
+}
+
+.pdf-link:hover {
+  color: #d5ee30;
+}

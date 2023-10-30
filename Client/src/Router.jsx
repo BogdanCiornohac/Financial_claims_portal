@@ -3,22 +3,21 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import LandingPage from "./Pages/LandingPage";
 import AuthPage from "./Pages/AuthPage";
-import Navbar from "./Components/Navbar/Navbar";
+import Layout from "./Components/Layout/Layout";
 import { AuthContex } from "./Components/Context/auth-context";
 
 const Router = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userId, setUserId] = useState("");
   console.log(userId);
   const login = useCallback((id) => {
     setIsLoggedIn(true);
     setUserId(id);
-
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
-    setUserId('');
+    setUserId("");
   }, []);
 
   let routes;
@@ -49,10 +48,16 @@ const Router = () => {
 
   return (
     <AuthContex.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout,
+        userId: userId,
+      }}
     >
-      <Navbar />
-      <BrowserRouter>{routes}</BrowserRouter>
+      <Layout>
+        <BrowserRouter>{routes}</BrowserRouter>
+      </Layout>
     </AuthContex.Provider>
   );
 };

@@ -20,7 +20,6 @@ const AuthPage = () => {
           <Signup rotateForm={rotateHandler} user={user} setUser={setUser} />
         </div>
       </div>
-      <div className="spacer layer1"></div>
     </div>
   );
 };
