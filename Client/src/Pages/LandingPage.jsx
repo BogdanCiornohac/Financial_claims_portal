@@ -34,7 +34,7 @@ const LandingPage = () => {
     if (ticket.inProgress) {
       return 'In progress';
     } else {
-      return ticket.aproved ? 'approved' : 'rejected';
+      return ticket.aproved ? 'approved' : 'Rejected';
     }
   }
 
@@ -91,7 +91,7 @@ const LandingPage = () => {
           author={ticket.author.username}
           text={ticket.text}
           status={getStatus(ticket)}
-          pdf={ticket.file?.url}
+          pdf={ticket.file}
           isAdmin={auth.user.isAdmin}
           approve={() => handleApprove(ticket.id)}
           decline={() => handleDecline(ticket.id)}

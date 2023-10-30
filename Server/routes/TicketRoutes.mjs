@@ -16,7 +16,7 @@ initializeApp(config);
 const storage = getStorage();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/", upload.single("file"), catchAsync(isLoggedIn), catchAsync(async (req, res) => {
+router.post("/:userId", upload.single("file"), catchAsync(isLoggedInParams), catchAsync(async (req, res) => {
     const { title, text } = req.body;
     const storageRef = ref(storage, `tickets/${req.file.originalname}`);
     const metadata = {
@@ -48,7 +48,7 @@ router.post("/", upload.single("file"), catchAsync(isLoggedIn), catchAsync(async
     });
     console.log(ticket);
     console.log('File successfully uploaded.', downloadURL);
-    res.status(200).json({ posted: true });
+    res.status(200).redirect('//localhost:5173');
 }))
 router.get("/:userId", catchAsync(isLoggedInParams), catchAsync(async (req, res) => {
     const { userId } = req.params;

@@ -45,8 +45,8 @@ const Ticket = ({ title, author, text, status, pdf, isAdmin, approve, decline })
         <h5>Submited by {author}</h5>
         <p>{text}</p>
         {!!pdf && (
-          <a className="pdf-link" href={pdf} target="_blank">
-            Oped PDF.
+          <a className="pdf-link" href={pdf.url} target="_blank">
+            {pdf.file_name}
           </a>
         )}
       </div>

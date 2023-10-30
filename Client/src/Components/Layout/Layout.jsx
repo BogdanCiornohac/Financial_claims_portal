@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const [show, setShow] = useState(false);
   return (
     <div className="layout-container">
-      <Navbar setShow={() => setShow(true)} />
+      <Navbar setShow={() => setShow(curr => !curr)} />
       <Modal show={show} reset={() => setShow(false)} />
       {children}
       <div className="spacer layer1"></div>
