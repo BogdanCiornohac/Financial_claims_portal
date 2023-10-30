@@ -22,13 +22,15 @@ model User {
 }
 
 model Ticket {
-  id       String  @id @default(uuid())
-  author   User    @relation(fields: [authorId], references: [id])
-  authorId String
-  title    String
-  text     String
-  file     File?
-  aproved  Boolean @default(false)
+  id         String  @id @default(uuid())
+  author     User    @relation(fields: [authorId], references: [id])
+  authorId   String
+  title      String
+  text       String
+  file       File?
+  aproved    Boolean @default(false)
+  declined   Boolean @default(false)
+  inProgress Boolean @default(true)
 }
 
 model File {
