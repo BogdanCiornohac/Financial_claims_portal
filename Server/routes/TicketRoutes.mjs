@@ -61,7 +61,8 @@ router.get("/:userId", catchAsync(isLoggedInParams), catchAsync(async (req, res)
             include: {
                 tickets: {
                     include: {
-                        file: true
+                        file: true,
+                        author: true
                     }
                 }
             }

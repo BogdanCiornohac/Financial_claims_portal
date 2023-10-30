@@ -7,7 +7,6 @@ import { MdOutlineRemoveDone, MdOutlineDoneAll } from "react-icons/md";
 import "./Ticket.css";
 
 const Ticket = ({ title, author, text, status, pdf, isAdmin, approve, decline }) => {
-  const [show, setShow] = useState(false);
   let icon;
 
   const statusHadler = () => {
