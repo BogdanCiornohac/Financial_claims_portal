@@ -7,6 +7,7 @@ const LandingPage = () => {
 
   const [tickets, setTickets] = useState([]);
   const [reloadTickets, setReloadTickets] = useState(false);
+  const [filter, setFilter] = useState(false);
   const auth = useContext(AuthContext);
 
   const getTickets = async () => {
@@ -76,7 +77,6 @@ const LandingPage = () => {
       console.log(error);
     }
   }
-
   return (
     <div className="landing-container">
       <h1>
@@ -84,19 +84,29 @@ const LandingPage = () => {
           ? auth.user.isAdmin ? "All tickets" : "Your tickets"
           : "There are no tickets... Maybe create one?"}
       </h1>
-      {tickets.map((ticket) => (
-        <Ticket
-          key={ticket.id}
-          title={ticket.title}
-          author={ticket.author.username}
-          text={ticket.text}
-          status={getStatus(ticket)}
-          pdf={ticket.file}
-          isAdmin={auth.user.isAdmin}
-          approve={() => handleApprove(ticket.id)}
-          decline={() => handleDecline(ticket.id)}
-        />
-      ))}
+      <button onClick={() => setFilter(curr => !curr)}>
+        Show {filter ? "all tickets" : "tickets in progress"}
+      </button>
+      {tickets
+        .filter((ticket) => {
+          if (!filter || ticket.inProgress) {
+            return true;
+          }
+          return false;
+        })
+        .map((ticket) => (
+          <Ticket
+            key={ticket.id}
+            title={ticket.title}
+            author={ticket.author.username}
+            text={ticket.text}
+            status={getStatus(ticket)}
+            pdf={ticket.file}
+            isAdmin={auth.user.isAdmin}
+            approve={() => handleApprove(ticket.id)}
+            decline={() => handleDecline(ticket.id)}
+          />
+        ))}
     </div>
   );
 };
