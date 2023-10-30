@@ -7,3 +7,48 @@
   position: absolute;
   z-index: 10;
 }
+
+.modal {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  border-radius: 20px;
+  border-top: 5px solid green;
+  transform: translate(-50%, -50%);
+  padding: 15px;
+}
+
+.modal .title--modal-container {
+  color: black;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  cursor: default;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+.modal-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: black;
+}
+.modal-inputs .placeholder {
+  margin-bottom: -20px;
+}
+
+.modal-inputs input {
+  height: 25px;
+  padding: 10px;
+  border-radius: 5px;
+}
