@@ -8,6 +8,7 @@ import "./Login.css";
 
 const Login = ({ rotateForm, user, setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
   const auth = useContext(AuthContex);
 
   const showPasswordHandler = () => {
@@ -38,12 +39,11 @@ const Login = ({ rotateForm, user, setUser }) => {
         body: JSON.stringify(requestData),
       });
       const data = await response.json();
-      console.log(data);
       if (data.authenticated) {
-        auth.login(data.id);
-        console.log('Logged in');
+        auth.login(data.id, data.isAdmin);
+        setError(null);
       } else {
-        console.log("Authentication failed");
+        setError(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -52,6 +52,7 @@ const Login = ({ rotateForm, user, setUser }) => {
 
   return (
     <form className="form-container-front" onSubmit={formHandler}>
+      {error && <div>{error}</div>}
       <h1 className="title">LogIn</h1>
       <div className="login-inputs">
         <Input

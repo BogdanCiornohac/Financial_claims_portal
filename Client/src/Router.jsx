@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import LandingPage from "./Pages/LandingPage";
@@ -7,22 +7,39 @@ import Layout from "./Components/Layout/Layout";
 import { AuthContex } from "./Components/Context/auth-context";
 
 const Router = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userId, setUserId] = useState("");
-  console.log(userId);
-  const login = useCallback((id) => {
-    setIsLoggedIn(true);
-    setUserId(id);
+  const [user, setUser] = useState({
+    isLoggedIn: false,
+    id: "",
+    isAdmin: false,
+  });
+  console.log(user);
+  const login = useCallback((id, isAdmin) => {
+    setUser({ isLoggedIn: true, id, isAdmin });
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ isLoggedIn: true, id, isAdmin })
+    );
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    setUserId("");
+    setUser({ isLoggedIn: false, id: "", isAdmin: false });
+    localStorage.removeItem("user");
+  }, []);
+  const cachedLoggedUser = () => {
+    let userData = localStorage.getItem("user");
+    if (userData) {
+      console.log(userData);
+      const data = JSON.parse(userData);
+      setUser(data);
+    }
+  };
+  useEffect(() => {
+    cachedLoggedUser();
   }, []);
 
   let routes;
 
-  if (isLoggedIn) {
+  if (user.isLoggedIn) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -47,14 +64,7 @@ const Router = () => {
   }
 
   return (
-    <AuthContex.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        login: login,
-        logout: logout,
-        userId: userId,
-      }}
-    >
+    <AuthContex.Provider value={{ user: user, login: login, logout: logout }}>
       <Layout>
         <BrowserRouter>{routes}</BrowserRouter>
       </Layout>
