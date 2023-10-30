@@ -13,7 +13,7 @@ const Modal = ({ show, reset }) => {
             <h2>Create New Ticket</h2>
             <AiOutlineClose className="close-icon" onClick={reset} />
           </div>
-          <div className="modal-inputs">
+          <form className="modal-inputs">
             <input type="text" placeholder="Title" />
             <placeholder htmlFor="description" className="placeholder">
               Add ticket description...
@@ -25,7 +25,7 @@ const Modal = ({ show, reset }) => {
               rows="10"
             />
             <input type="file" placeholder="Upload PDF" />
-          </div>
+          </form>
           <button>Submit</button>
         </div>
       )}
