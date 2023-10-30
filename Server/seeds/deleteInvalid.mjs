@@ -6,10 +6,10 @@ async function updateTickets() {
     await prisma.ticket.updateMany({
         where: {
             aproved: true,
-            inProgress: true
         },
         data: {
-            inProgress: false
+            aproved: false,
+            inProgress: true
         }
     });
 

@@ -8,6 +8,7 @@ import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/
 import isLoggedIn from "../middleware/isLoggedIn.mjs";
 import isAdmin from "../middleware/isAdmin.mjs";
 import isLoggedInParams from "../middleware/isLoggedInParams.mjs";
+import ExpressError from "../utils/ExpressError.mjs";
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -50,7 +51,7 @@ router.post("/", upload.single("file"), catchAsync(isLoggedIn), catchAsync(async
     res.status(200).json({ posted: true });
 }))
 router.get("/:userId", catchAsync(isLoggedInParams), catchAsync(async (req, res) => {
-    const { userId } = req.body;
+    const { userId } = req.params;
     const user = res.locals.user;
     if (!user.isAdmin) {
         const user = await prisma.user.findUnique({
@@ -77,14 +78,46 @@ router.get("/:userId", catchAsync(isLoggedInParams), catchAsync(async (req, res)
         res.status(200).json({ tickets })
     }
 }))
-router.patch('/:ticketId', catchAsync(isLoggedIn), isAdmin, catchAsync(async (req, res) => {
+router.patch('/:ticketId/approve', catchAsync(isLoggedIn), isAdmin, catchAsync(async (req, res) => {
     const { ticketId } = req.params;
-    const ticket = await prisma.ticket.update({
+    let ticket = await prisma.ticket.findUnique({
+        where: {
+            id: ticketId
+        }
+    })
+    if (!ticket || !ticket.inProgress) {
+        throw (new ExpressError('invalid ticket update', 500));
+    }
+    ticket = await prisma.ticket.update({
         where: {
             id: ticketId
         },
         data: {
             aproved: true,
+            inProgress: false
+        }
+    })
+    console.log(ticket);
+    res.status(200).json({ updated: true });
+}))
+
+router.patch('/:ticketId/decline', catchAsync(isLoggedIn), isAdmin, catchAsync(async (req, res) => {
+    const { ticketId } = req.params;
+    let ticket = await prisma.ticket.findUnique({
+        where: {
+            id: ticketId
+        }
+    })
+    if (!ticket || !ticket.inProgress) {
+        throw (new ExpressError('invalid ticket update', 500));
+    }
+    ticket = await prisma.ticket.update({
+        where: {
+            id: ticketId
+        },
+        data: {
+            declined: true,
+            inProgress: false
         }
     })
     console.log(ticket);

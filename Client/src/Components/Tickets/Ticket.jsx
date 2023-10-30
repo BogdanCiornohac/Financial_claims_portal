@@ -6,7 +6,8 @@ import { BiTimeFive } from "react-icons/bi";
 import { MdOutlineRemoveDone, MdOutlineDoneAll } from "react-icons/md";
 import "./Ticket.css";
 
-const Ticket = ({ title, text, status, pdf }) => {
+const Ticket = ({ title, author, text, status, pdf, isAdmin, approve, decline }) => {
+  const [show, setShow] = useState(false);
   let icon;
 
   const statusHadler = () => {
@@ -39,7 +40,10 @@ const Ticket = ({ title, text, status, pdf }) => {
         {icon}
       </div>
       <div className="text-container">
-        <h2 className="ticket-title">{title}</h2>
+        <h2 className="ticket-title" onClick={() => setShow(true)}>
+          {title}
+        </h2>
+        <h5>Submited by {author}</h5>
         <p>{text}</p>
         {!!pdf && (
           <a className="pdf-link" href={pdf} target="_blank">
@@ -47,10 +51,10 @@ const Ticket = ({ title, text, status, pdf }) => {
           </a>
         )}
       </div>
-      <div className="button-container">
-        <Button title="Edit" icon={<AiOutlineEdit />} type="edit" />
-        <Button title="Discard" icon={<AiOutlineDelete />} type="delete" />
-      </div>
+      {(isAdmin && status === 'In progress') && <div className="button-container">
+        <Button title="Approve" icon={<AiOutlineEdit />} type="approve" onClick={approve} />
+        <Button title="Decline" icon={<AiOutlineDelete />} type="decline" onClick={decline} />
+      </div>}
     </div>
   );
 };

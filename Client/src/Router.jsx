@@ -4,20 +4,21 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import AuthPage from "./Pages/AuthPage";
 import Layout from "./Components/Layout/Layout";
-import { AuthContex } from "./Components/Context/auth-context";
+import { AuthContext } from "./Components/Context/auth-context";
 
 const Router = () => {
   const [user, setUser] = useState({
     isLoggedIn: false,
     id: "",
     isAdmin: false,
+    username: ''
   });
   console.log(user);
-  const login = useCallback((id, isAdmin) => {
-    setUser({ isLoggedIn: true, id, isAdmin });
+  const login = useCallback((id, isAdmin, username) => {
+    setUser({ isLoggedIn: true, id, isAdmin, username });
     localStorage.setItem(
       "user",
-      JSON.stringify({ isLoggedIn: true, id, isAdmin })
+      JSON.stringify({ isLoggedIn: true, id, isAdmin, username })
     );
   }, []);
 
@@ -64,11 +65,11 @@ const Router = () => {
   }
 
   return (
-    <AuthContex.Provider value={{ user: user, login: login, logout: logout }}>
+    <AuthContext.Provider value={{ user: user, login: login, logout: logout }}>
       <Layout>
         <BrowserRouter>{routes}</BrowserRouter>
       </Layout>
-    </AuthContex.Provider>
+    </AuthContext.Provider>
   );
 };
 

@@ -24,7 +24,7 @@ router.post("/login", catchAsync(async (req, res) => {
     }
     if (user && compare) {
         // console.log('Same')
-        res.status(200).json({ authenticated: true, id: user.id, isAdmin: user.isAdmin, message: "Authentication successful" });
+        res.status(200).json({ authenticated: true, id: user.id, isAdmin: user.isAdmin, username: user.username, message: "Authentication successful" });
     } else {
         res.status(401).json({ authenticated: false, message: "Invalid username or password" });
     }

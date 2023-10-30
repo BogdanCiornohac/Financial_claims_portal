@@ -5,12 +5,12 @@
   gap: 5px;
 }
 
-.button.edit {
-  background-color: yellow;
-  border: 2px inset rgb(143, 143, 35);
+.button.approve {
+  background-color: green;
+  border: 2px inset rgb(4, 57, 8);
 }
 
-.button.delete {
+.button.decline {
   background-color: red;
   border: 2px inset rgb(142, 24, 24);
 }
