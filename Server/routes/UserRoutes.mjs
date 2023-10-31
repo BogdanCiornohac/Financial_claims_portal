@@ -43,7 +43,7 @@ router.post("/signup", catchAsync(async (req, res) => {
     })
     // console.log(user);
 
-    res.status(201).json({ registered: true, id: user.id, isAdmin: user.isAdmin, message: "Registration successful" });
+    res.status(201).json({ registered: true, id: user.id, isAdmin: user.isAdmin, username: user.username, message: "Registration successful" });
 }));
 
 export default router;
